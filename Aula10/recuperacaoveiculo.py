@@ -113,43 +113,100 @@ except Exception as e:
 #     exit()   
 
 #visualizando dados 2 
-try:
-        # print(df_roubo_veiculo)
-        plt.subplots(1, 2, figsize=(16, 7))
-        plt.suptitle('Análise de Roubo de Veículos do RJ')
+# try:
+#         # print(df_roubo_veiculo)
+#         plt.subplots(1, 2, figsize=(16, 7))
+#         plt.suptitle('Análise de Roubo de Veículos do RJ')
         
-        plt.subplot(1, 2, 1)
-        plt.boxplot(array_recup_veiculo,vert=False, showmeans=True)
-        plt.title('Boxplot dos Dados')
+#         plt.subplot(1, 2, 1)
+#         plt.boxplot(array_recup_veiculo,vert=False, showmeans=True)
+#         plt.title('Boxplot dos Dados')
         
-except ImportError as e:
-    print(f'Erro ao obter informações sobre padrão de roubo de veículos: {e}')
-    exit()   
+# except ImportError as e:
+#     print(f'Erro ao obter informações sobre padrão de roubo de veículos: {e}')
+#     exit()   
 
 
-# Segunda subplot: Exibição de informações estatísticas
-try:
-    plt.subplot(1, 2, 2)  # Configurar o segundo gráfico no lado direito
-    plt.text(0.1, 0.9, f'Média: {media}', fontsize=12)
-    plt.text(0.1, 0.8, f'Mediana: {mediana}', fontsize=12)
-    plt.text(0.1, 0.7, f'Distância: {distancia_media_mediana}', fontsize=12)
-    plt.text(0.1, 0.6, f'Menor valor: {minimo}', fontsize=12) 
-    plt.text(0.1, 0.5, f'Limite inferior: {limite_inferior}', fontsize=12)
-    plt.text(0.1, 0.4, f'Q1: {q1}', fontsize=12)
-    plt.text(0.1, 0.3, f'Q3: {q3}', fontsize=12)
-    plt.text(0.1, 0.2, f'Limite superior: {limite_superior}', fontsize=12)
-    plt.text(0.1, 0.1, f'Maior valor: {maximo}', fontsize=12)
-    plt.text(0.1, 0.0, f'Amplitude Total: {amplitute_total}', fontsize=12)
-    plt.show()
+# # Segunda subplot: Exibição de informações estatísticas
+# try:
+#     plt.subplot(1, 2, 2)  # Configurar o segundo gráfico no lado direito
+#     plt.text(0.1, 0.9, f'Média: {media}', fontsize=12)
+#     plt.text(0.1, 0.8, f'Mediana: {mediana}', fontsize=12)
+#     plt.text(0.1, 0.7, f'Distância: {distancia_media_mediana}', fontsize=12)
+#     plt.text(0.1, 0.6, f'Menor valor: {minimo}', fontsize=12) 
+#     plt.text(0.1, 0.5, f'Limite inferior: {limite_inferior}', fontsize=12)
+#     plt.text(0.1, 0.4, f'Q1: {q1}', fontsize=12)
+#     plt.text(0.1, 0.3, f'Q3: {q3}', fontsize=12)
+#     plt.text(0.1, 0.2, f'Limite superior: {limite_superior}', fontsize=12)
+#     plt.text(0.1, 0.1, f'Maior valor: {maximo}', fontsize=12)
+#     plt.text(0.1, 0.0, f'Amplitude Total: {amplitute_total}', fontsize=12)
+#     plt.show()
     
-    # desativar os eixos
-    plt.axis('Off')
-    # Ajustar o layout
-    plt.tight_layout()
+#     # desativar os eixos
+#     plt.axis('Off')
+#     # Ajustar o layout
+#     plt.tight_layout()
 
+#     plt.show()
+
+# except ImportError as e:
+#     print(f'Erro ao obter informações sobre padrão de roubo de veículos: {e}')
+#     exit()   
+
+try:
+    print('Calculando medidas de distribuiçao...')
+    
+    # Calculando assimetria
+    assimetria = df_recup_veiculo['recuperacao_veiculos'].skew()
+
+    #Calculando Curtose
+    Curtose = df_recup_veiculo['recuperacao_veiculos'].kurtosis()
+
+    print('\nMedidas de distribuicao: ')
+    print(30*'-')
+    print(f'Assimetria: {assimetria}')
+    print(f'Curtose: {Curtose}')
+
+except ImportError as e:
+    print(f'Erro ao obter informações sobre padrão de roubo de veículos: {e}')
+    exit()  
+
+
+try:
+    # print(df_roubo_veiculo)
+    plt.subplots(2, 2, figsize=(16, 7))
+    plt.suptitle('recuperacao de verículos', fontsize =20)
+    
+    #primeira posicao
+    plt.subplot(2, 2, 1)
+    plt.boxplot(array_recup_veiculo, vert=False, showmeans=True)
+    plt.suptitle('recuperacao de verículos')
+
+    #segunda posicao
+    #histograma
+    plt.subplot(2, 2, 2)
+    plt.hist(array_recup_veiculo, bins=50, edgecolor='black')
+    plt.axvline(media, color='g', linewidth=1)
+    plt.axvline(mediana, color='y', linewidth=1)
+
+    #terceira posicao
+    #histograma
+    plt.subplot(2, 2, 3)
+    plt.text(0.1,0.9, f'Media: {media}',fontsize=12)
+    plt.text(0.1,0.8, f'Mediana: {mediana}',fontsize=12)
+
+    #quarta posicao
+    plt.subplot(2,2,4)
+    #assimetria e curtose
+    plt.text(0.1, 0.5, f'Assimetria: {assimetria}',fontsize=12)
+    plt.text(0.1, 0.4, f'Curtose: {curtose}',fontsize=12)
+    plt.title('Impressao de Medidas Estatisticas')
+    #desativa aos eixos
+    plt.axis('off')
+    #ajustar o layout
+    plt.tight_layout()    
     plt.show()
 
 except ImportError as e:
     print(f'Erro ao obter informações sobre padrão de roubo de veículos: {e}')
-    exit()   
-
+    exit()  
